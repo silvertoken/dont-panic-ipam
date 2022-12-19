@@ -1,0 +1,103 @@
+openapi: 3.0.0
+info:
+  title: "Don't Panic IPAM API"
+  description: "An API to manage IP and DNS"
+  version: "1.0.0"
+
+servers:
+  - url: "/"
+    description: "IPAM"
+
+components:
+  schemas:
+    IPAM:
+      type: "object"
+      required:
+        - address
+        - name
+      properties:
+        name:
+          type: "string"
+          description: "The fully qualified domain name"
+        address:
+          type: "string"
+          description: "The IP Address"
+        disabled:
+          type: "string"
+          description: "Disable the entry"
+        ttl:
+          type: "string"
+          description: "The time to live in client cache"
+  parameters:
+    id:
+      name: "id"
+      description: "ID of the IPAM entry"
+      in: path
+      required: True
+      schema:
+        type: "string"
+paths:
+  /:
+    get:
+      operationId: "ipam.get_all"
+      summary: "Returns the list of all IPAM entries"
+      tags:
+        - IPAM
+      responses:
+        "200":
+          description: "Successfully returned the list of IPAM entries"
+    post:
+      operationId: "ipam.add_new"
+      tags:
+        - IPAM
+      summary: "Add a new IPAM entry"
+      requestBody:
+        description: "IPAM entry to add"
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: "ipam"
+              $ref: "#/components/schemas/IPAM"
+      responses:
+        "201":
+          description: "Succesfully created IPAM entry"
+  /{id}:
+    get:
+      operationId: "ipam.get_one"
+      tags:
+        - IPAM
+      summary: "Returns a single IPAM entry by ID"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "200":
+          description: "Successfully returned the IPAM entry"
+    put:
+      operationId: "ipam.update_one"
+      tags:
+        - IPAM
+      summary: "Updates a single IPAM entry by ID"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      requestBody:
+        description: "IPAM entry to update"
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: "ipam"
+              $ref: "#/components/schemas/IPAM"
+      responses:
+        "200":
+          description: "Successfully updated the IPAM entry"
+    delete:
+      operationId: "ipam.delete_one"
+      tags:
+        - IPAM
+      summary: "Delete a single IPAM entry by ID"
+      parameters:
+        - $ref: "#/components/parameters/id"
+      responses:
+        "204":
+          description: "Successfully deleted the IPAM entry"

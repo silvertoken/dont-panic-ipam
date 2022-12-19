@@ -1,0 +1,12 @@
+{
+	"build": {
+		"dockerfile": "../Dockerfile",
+		"context": ".."
+	},
+	"extensions": ["dbaeumer.vscode-eslint"],
+	"containerEnv": {
+		"API_USERNAME": "${localEnv:API_USERNAME}",
+		"API_PASSWORD": "${localEnv:API_PASSWORD}",
+		"API_VERIFY": "${localEnv:API_VERIFY}"
+	}
+}
