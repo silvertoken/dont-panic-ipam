@@ -15,8 +15,7 @@ ENV API_VERIFY=True
 WORKDIR $HOME
 
 # install dependencies
-COPY ./requirements.txt $HOME/requirements.txt
-RUN pip install -r requirements.txt
+RUN pip install flask requests gunicorn 'connexion[swagger-ui]'
 
 # copy the API
 COPY ./src/* $HOME/
